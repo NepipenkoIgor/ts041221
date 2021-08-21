@@ -23,13 +23,7 @@
     "@types/jasmine": "^3.8.2",
     "@typescript-eslint/eslint-plugin": "^4.29.2",
     "@typescript-eslint/parser": "^4.29.2",
-    "jasmine-core": "^3.5.0",
-    "karma": "^4.4.1",
-    "karma-chrome-launcher": "^3.1.0",
-    "karma-coverage-istanbul-reporter": "^3.0.3",
-    "karma-jasmine": "^2.0.1",
-    "karma-jasmine-html-reporter": "^1.7.0",
-    "karma-mocha-reporter": "^2.2.5",
+    "copy-webpack-plugin": "^9.0.1",
     "css-loader": "^6.2.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
@@ -43,7 +37,9 @@
     "jasmine-marbles": "^0.9.0",
     "karma": "^6.3.4",
     "karma-chrome-launcher": "^3.1.0",
+    "karma-coverage-istanbul-reporter": "^3.0.3",
     "karma-jasmine": "^4.0.1",
+    "karma-jasmine-html-reporter": "^1.7.0",
     "karma-mocha-reporter": "^2.2.5",
     "karma-typescript": "^5.5.2",
     "prettier": "^2.3.2",
@@ -56,5 +52,9 @@
     "webpack": "^5.51.1",
     "webpack-cli": "^4.8.0",
     "webpack-dev-server": "^4.0.0"
+  },
+  "dependencies": {
+    "bootstrap": "^5.1.0",
+    "reflect-metadata": "^0.1.13"
   }
 }
