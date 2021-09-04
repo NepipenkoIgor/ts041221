@@ -32,7 +32,4 @@ function sendUpdates(emailAddr) {
 		sendEmail(emailAddr.trim());
 	}
 }
-
-/** @type{Array.<number>} */
-const a = ['sd'];
 /* eslint-enable */
