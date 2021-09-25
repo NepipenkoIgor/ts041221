@@ -1,4 +1,4 @@
-# Typescript masterclass strter
+# Typescript masterclass starter
 
 ## Getting Started
 
