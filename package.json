@@ -8,7 +8,8 @@
     "lint:fix": "npm run lint -- --fix",
     "prepare": "husky install",
     "start": "webpack  serve",
-    "test": "karma start"
+    "test": "karma start",
+    "build": "webpack"
   },
   "keywords": [
     "learn-typescript",
@@ -23,6 +24,7 @@
     "@types/jasmine": "3.10.2",
     "@typescript-eslint/eslint-plugin": "5.4.0",
     "@typescript-eslint/parser": "5.4.0",
+    "ajv": "^8.8.2",
     "copy-webpack-plugin": "10.0.0",
     "css-loader": "6.5.1",
     "eslint": "8.3.0",
@@ -51,7 +53,7 @@
     "typescript": "4.5.2",
     "webpack": "5.64.4",
     "webpack-cli": "4.9.1",
-    "webpack-dev-server": "4.6.0"
+    "webpack-dev-server": "^4.6.0"
   },
   "dependencies": {
     "bootstrap": "5.1.3",
