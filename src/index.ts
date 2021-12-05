@@ -1,137 +1,55 @@
-type sn = string | number;
+// declare type ClassDecorator = <TFunction extends Function>(target: TFunction) => TFunction | void;
+// declare type PropertyDecorator = (target: Object, propertyKey: string | symbol) => void;
+// declare type MethodDecorator = <T>(
+// 	target: Object,
+// 	propertyKey: string | symbol,
+// 	descriptor: TypedPropertyDescriptor<T>,
+// ) => TypedPropertyDescriptor<T> | void;
+// declare type ParameterDecorator = (
+// 	target: Object,
+// 	propertyKey: string | symbol,
+// 	parameterIndex: number,
+// ) => void;
 
-interface IPointCoord {
-	x: sn;
-}
+import {
+	CheckTypeInRuntime,
+	Debounce,
+	LogValue,
+	SavePersistence,
+	Range1,
+	Validate,
+} from './decorators';
 
-interface IPointActions {
-	sum(): number;
-}
+class SearchComponent {
+	@CheckTypeInRuntime
+	@SavePersistence
+	public inputValue!: string;
 
-type Constructable = new (...args: any[]) => any;
+	public constructor(private readonly inputEl: HTMLInputElement) {
+		this.inputEl.addEventListener<'input'>('input', this.onSearch.bind(this));
+		console.log('INIT', this.inputValue);
+	}
 
-function Timestamped<BaseClass extends Constructable>(BC: BaseClass) {
-	return class extends BC {
-		public timestamp = Date.now();
-	};
-}
+	@Debounce(300)
+	@LogValue
+	private onSearch(_event: Event) {
+		this.updatePercentage(10, 30);
+		// this.inputValue = (_event.target as HTMLInputElement).value;
+		// console.log(event);
+		// send data to server
+	}
 
-function Tagged<BaseClass extends Constructable>(BC: BaseClass) {
-	return class extends BC {
-		public tags = ['ts', 'js'];
-	};
-}
-
-class BasePoint implements IPointCoord, IPointActions {
-	#p: number = 3;
-
-	public constructor(x: string, y: number, z: number);
-	public constructor(x: number, y: string, z: number);
-	public constructor(x: number, y: number, z: number);
-	public constructor(public x: sn, protected y: sn, private z: number) {}
-
-	public sum(): number {
-		return Number(this.x) + Number(this.x) + this.z + this.#p;
+	@Validate
+	public updatePercentage(oldValue: number, @Range1(10, 40) newValue: number) {
+		console.log(oldValue, newValue);
 	}
 }
 
-class Point extends Tagged(Timestamped(BasePoint)) {
-	public constructor(x: number, y: number, z: number) {
-		super(x, y, z);
-		console.log(this.y);
-	}
-}
+const inputEl = document.querySelector('input') as HTMLInputElement;
+const sc = new SearchComponent(inputEl);
+console.log(sc);
 
-// const p = new Point(1, '1', 1);
-// const p1 = new Point('1', 1, 1);
-const p2 = new Point(1, 1, 1);
-console.log(p2);
-console.log(p2.timestamp);
-
-class Singleton {
-	private static instance: Singleton;
-
-	// eslint-disable-next-line @typescript-eslint/no-empty-function
-	private constructor() {}
-
-	public static getInstance(): Singleton {
-		if (!Singleton.instance) {
-			Singleton.instance = new Singleton();
-		}
-		return Singleton.instance;
-	}
-}
-
-// class B extends  Singleton {
-//
-// }
-
-// class Singleton {
-// 	private static instance: Singleton;
-//
-// 	static {
-// 		console.log('STATIC BLOCK');
-// 		Singleton.instance = new Singleton();
-// 	}
-//
-// 	public constructor() {
-// 		console.log('INIT');
-// 		return Singleton.instance;
-// 	}
-// }
-
-// const inst1 = Singleton.getInstance();
-// const inst2 = Singleton.getInstance();
-// const inst3 = Singleton.getInstance();
-// const inst4 = Singleton.getInstance();
-// const inst5 = Singleton.getInstance();
-// const inst1 = new Singleton();
-// const inst2 = new Singleton();
-// const inst3 = new Singleton();
-// const inst4 = new Singleton();
-// const inst5 = new Singleton();
-
-// console.log(inst1 === inst4);
-
-abstract class AbstractControl<T = string> {
-	public abstract model: T;
-
-	public abstract getModel(): T;
-
-	public onFocus() {
-		// do something;
-	}
-
-	public onBlur() {
-		// do something;
-	}
-}
-
-abstract class AbstractControlWithSet<T = string> extends AbstractControl<T> {
-	public abstract setModel(model: T): void;
-}
-
-class MHInputControl extends AbstractControl {
-	public model = '';
-
-	public getModel(): string {
-		return '';
-	}
-}
-
-interface IDropDownItem {
-	text: string;
-	value: string;
-}
-
-class MHInputDropDown extends AbstractControlWithSet<IDropDownItem[]> {
-	public model: IDropDownItem[] = [];
-
-	public getModel(): IDropDownItem[] {
-		return [];
-	}
-
-	public override setModel(model: IDropDownItem[]) {
-		this.model = model;
-	}
-}
+setTimeout(() => {
+	// (sc.inputValue as any) = 123123;
+	sc.updatePercentage(10, 80);
+}, 5000);
