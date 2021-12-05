@@ -1,4 +1,9 @@
-export const list = [
+export interface IListEl {
+	title: string;
+	items?: IListEl[];
+}
+
+export const list: IListEl[] = [
 	{
 		title: 'Животные',
 		items: [

@@ -72,3 +72,33 @@ type fn = (a: string, c: boolean, b: IHydrantB, cb: () => void) => IHydrantA; //
 
 // keyof MyArr => 0 | 1 | 2 |'length' | 'pop'
 // MyArr[keyof MyArr] = string | number | Function
+
+// type RequiredOrOmit<T, U, Z extends keyof U> = T extends true ? Required<U> : Omit<U, Z>;
+//
+// function test<T extends boolean>(show: T) {
+// 	type Result = RequiredOrOmit<T, { test: number; value?: () => string }, 'value'>;
+// 	if (show) {
+// 		return {
+// 			test: 1,
+// 			value: () => 'v',
+// 		} as Result;
+// 	}
+// 	return {
+// 		test: 1,
+// 	} as Result;
+// }
+//
+// //
+// //
+// test(true);
+// test(false);
+
+type FlattenType<T> = T extends (infer U)[] ? FlattenType<U> : T;
+
+function deepFlatten<Z extends unknown[]>(_arr: Z): FlattenType<Z>[] {
+	throw new Error();
+}
+
+const arr1: number[] = deepFlatten([1, 2, 3, 4]);
+const arr2: number[] = deepFlatten([1, [12, 34], 3, 4]);
+const arr3: (number | string)[] = deepFlatten([1, [12, [1, '2', 3]], 3, 4]);

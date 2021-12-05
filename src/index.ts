@@ -1,19 +1,28 @@
-type RequiredOrOmit<T, U, Z extends keyof U> = T extends true ? Required<U> : Omit<U, Z>;
+import { generateMenu } from './menu';
+import { list } from './menu/data';
 
-function test<T extends boolean>(show: T) {
-	type Result = RequiredOrOmit<T, { test: number; value?: () => string }, 'value'>;
-	if (show) {
-		return {
-			test: 1,
-			value: () => 'v',
-		} as Result;
-	}
-	return {
-		test: 1,
-	} as Result;
-}
+//declare function ParseTrace(selector: string): any;
 
-//
-//
-test(true);
-test(false);
+$('.menu')
+	.html(generateMenu(list))
+	.on('click', (e) => {
+		const el: HTMLElement = e.target as HTMLElement;
+		if (!el.classList.contains('title')) {
+			return;
+		}
+		const parentLi: HTMLLIElement = el.parentElement as HTMLLIElement;
+		parentLi.classList.toggle('menu-open');
+	});
+/*
+const navMenu: HTMLDivElement = document.querySelector('.menu') as HTMLDivElement;
+*/
+
+// navMenu.innerHTML = generateMenu(list);
+// navMenu.addEventListener('click', (e: MouseEvent) => {
+// 	const el: HTMLElement = e.target as HTMLElement;
+// 	if (!el.classList.contains('title')) {
+// 		return;
+// 	}
+// 	const parentLi: HTMLLIElement = el.parentElement as HTMLLIElement;
+// 	parentLi.classList.toggle('menu-open');
+// });
